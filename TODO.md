@@ -7,4 +7,5 @@
 - [ ] Allow user-supplied API keys in UI (Semantic Scholar, future web search).
 - [ ] Add another web provider (e.g., Brave/SerpAPI/Tavily) when a key is chosen.
 - [ ] Light tests for search orchestration (dedupe/rank) and provider mocks.
+- [ ] UI for bruker-nøkler lagret kryptert i browser (passphrase + localStorage).
 
