@@ -6,22 +6,21 @@ const BASE = 'https://api.semanticscholar.org/graph/v1';
 export const semanticScholarProvider: Provider = {
   id: 'semanticscholar',
   async search(query: ProviderQuery): Promise<ProviderResult[]> {
-    if (!env.semanticScholarKey) {
-      // Key not provided; gracefully return no results.
-      return [];
+    const pageSize = query.pageSize ?? 5;
+    const url = `${BASE}/paper/search?query=${encodeURIComponent(
+      query.q,
+    )}&limit=${pageSize}&fields=title,url,abstract,venue,authors.name,externalIds,publicationDate,citationCount,year,isOpenAccess`;
+
+    const headers: Record<string, string> = { Accept: 'application/json' };
+    if (env.semanticScholarKey) {
+      headers['x-api-key'] = env.semanticScholarKey;
     }
 
-    const pageSize = query.pageSize ?? 5;
-    const url = `${BASE}/paper/search?query=${encodeURIComponent(query.q)}&limit=${pageSize}&fields=title,url,abstract,venue,authors.name,externalIds,publicationDate,citationCount,year,isOpenAccess`;
-
-    const res = await fetch(url, {
-      headers: {
-        'x-api-key': env.semanticScholarKey,
-        Accept: 'application/json',
-      },
-    });
+    const res = await fetch(url, { headers });
 
     if (!res.ok) {
+      // Allow anonymous access: silently drop unauthorized/limited responses.
+      if ([401, 403, 429].includes(res.status)) return [];
       throw new Error(`Semantic Scholar responded with ${res.status}`);
     }
 
