@@ -1,0 +1,32 @@
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+*.log
+*.cache
+.parcel-cache
+.turbo
+.next
+.nuxt
+.vercel
+.svelte-kit
+coverage
+
+# Vite
+.vite
+
+# Mac
+.DS_Store
+
+# Env
+.env
+.env.*
+
+# Editor/OS
+*.swp
+*.swo
+*.orig
+.idea
+.vscode
+
