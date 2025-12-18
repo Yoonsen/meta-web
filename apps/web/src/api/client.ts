@@ -4,7 +4,7 @@ const API_BASE =
   import.meta.env.VITE_API_URL?.replace(/\/$/, '') || 'http://localhost:8787';
 const useMock = import.meta.env.VITE_API_USE_MOCK === 'true';
 
-export const defaultSources = ['serp', 'openalex', 'arxiv'];
+export const defaultSources = ['arxiv', 'wikipedia', 'semanticscholar'];
 
 export async function search(request: SearchRequest): Promise<SearchResponse> {
   if (useMock) {
